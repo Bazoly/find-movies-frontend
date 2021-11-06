@@ -5,6 +5,7 @@ export const SEARCH_MOVIES_BY_TITLE = gql`
     searchMovies(query: $title) {
         id
         name
+        releaseDate
         genres {
             name
         }
