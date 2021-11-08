@@ -9,15 +9,11 @@ export default function ListContainer() {
         variables: {title: searchParams.get("title")},
     });
 
-    useEffect(() => {
-        if (data) {
-            setMovies(data.searchMovies)
-        }
-    }, [data]);
-
-    return(
+    if (loading) return "Loading...";
+    if (error) return `Error: ${error.message}`
+    return (
         <div>
-            {movies.map((movie) => {
+            {data.searchMovies.map((movie) => {
                 return <ListElement movie={movie}/>
             })}
         </div>
