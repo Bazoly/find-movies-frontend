@@ -3,6 +3,8 @@ import {AppBar} from "@mui/material";
 import Search from "./components/Search/Search";
 import {ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from} from "@apollo/client";
 import {onError} from "@apollo/client/link/error";
+import {Route, Routes} from "react-router-dom";
+import ListContainer from "./components/ListContainer/ListContainer";
 
 const errorLink = onError(({graphqlErrors, networkError}) => {
     if (graphqlErrors) {
@@ -27,9 +29,14 @@ function App() {
     return (
         <main>
             <AppBar position={"static"}>Find Movies</AppBar>
-            <ApolloProvider client={client} >
-                <Search />
-            </ApolloProvider>
+            <Search />
+            <Routes>
+                <Route path={"/search"} element={
+                    <ApolloProvider client={client} >
+                        <ListContainer />
+                    </ApolloProvider>}
+                />
+            </Routes>
 
 
         </main>
