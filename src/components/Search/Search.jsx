@@ -1,9 +1,4 @@
-import {Button, FormControl, TextField} from "@mui/material";
-import {useCallback, useEffect, useState} from "react";
-import {useQuery} from "@apollo/client";
-import {SEARCH_MOVIES_BY_TITLE} from "../../api/graphql/queries";
-import ListElement from "../ListElement/ListElement";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 export default function Search() {
