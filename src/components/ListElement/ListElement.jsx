@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 export default function ListElement({movie}) {
     let releaseDate = null;
 
@@ -6,11 +8,15 @@ export default function ListElement({movie}) {
     }
 
     return (
-        <div key={movie?.id}>
-            <h3>{movie?.name}</h3>
-            <p>Release date: {convertReleaseDate(movie?.releaseDate)?.toLocaleDateString()}</p>
-            <p>Score: {movie?.score}</p>
-            <p>Genre: {movie?.genres.map((genre) => genre.name + " ")}</p>
+        <div key={movie.id}>
+            <h3>
+                <Link to={`/movie/${movie.name} ${releaseDate?.getFullYear()}`}>
+                    {movie.name}
+                </Link>
+            </h3>
+            <p>Release date: {releaseDate?.toLocaleDateString()}</p>
+            <p>Score: {movie.score}</p>
+            <p>Genre: {movie.genres.map((genre) => genre.name + " ")}</p>
         </div>
     )
 }
