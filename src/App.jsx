@@ -29,13 +29,14 @@ function App() {
     return (
         <main>
             <AppBar position={"static"}>Find Movies</AppBar>
-            <Search />
+            <Search/>
             <Routes>
                 <Route path={"/search"} element={
-                    <ApolloProvider client={client} >
-                        <ListContainer />
+                    <ApolloProvider client={client}>
+                        <ListContainer/>
                     </ApolloProvider>}
                 />
+                <Route path={"/movie/*"} element={<h1>Movie</h1>}/>
             </Routes>
 
 
