@@ -1,9 +1,8 @@
 export default function ListElement({movie}) {
-    function convertReleaseDate(releaseDate) {
-        if (releaseDate === null) {
-            return null;
-        }
-        return new Date(releaseDate);
+    let releaseDate = null;
+
+    if (movie.releaseDate !== null) {
+        releaseDate = new Date(movie.releaseDate);
     }
 
     return (
