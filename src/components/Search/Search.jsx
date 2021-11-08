@@ -3,21 +3,25 @@ import {useCallback, useEffect, useState} from "react";
 import {useQuery} from "@apollo/client";
 import {SEARCH_MOVIES_BY_TITLE} from "../../api/graphql/queries";
 import ListElement from "../ListElement/ListElement";
+import {Navigate, useNavigate} from "react-router-dom";
 
 
 export default function Search() {
-    const [searchedMovie, setSearchedMovie] = useState("");
-    const {error, loading, data} = useQuery(SEARCH_MOVIES_BY_TITLE, {
-        variables: {title: searchedMovie},
-    });
+    const [searchedMovie, setSearchedMovie] = useState();
+    const navigate = useNavigate();
+
 
     const [movies, setMovies] = useState([]);
 
-    useEffect(() => {
-        if (data) {
-            setMovies(data.searchMovies)
+    function handleSubmit(event) {
+        event.preventDefault();
+        const formDate = new FormData(event.currentTarget);
+        if (!formDate.get("title")) {
+            return;
         }
-    }, [data]);
+        navigate(`/search?title=${formDate.get("title")}`);
+
+    }
 
 
     return (
