@@ -1,11 +1,12 @@
 import ListElement from "../ListElement/ListElement";
 import {useQuery} from "@apollo/client";
 import {SEARCH_MOVIES_BY_TITLE} from "../../api/graphql/queries";
-import {useEffect} from "react";
+import {useSearchParams} from "react-router-dom";
 
-export default function ListContainer(props) {
+export default function ListContainer() {
+    const [searchParams, setSearchParams] = useSearchParams();
     const {error, loading, data} = useQuery(SEARCH_MOVIES_BY_TITLE, {
-        variables: {title: searchedMovie},
+        variables: {title: searchParams.get("title")},
     });
 
     useEffect(() => {
