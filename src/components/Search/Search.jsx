@@ -7,11 +7,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 
 export default function Search() {
-    const [searchedMovie, setSearchedMovie] = useState();
     const navigate = useNavigate();
-
-
-    const [movies, setMovies] = useState([]);
 
     function handleSubmit(event) {
         event.preventDefault();
