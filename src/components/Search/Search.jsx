@@ -25,7 +25,7 @@ export default function Search() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Movie title:
-                    <input placeholder={"Search movie"} name={"title"} onChange={event => setSearchedMovie(event.target.value)}/>
+                    <input placeholder={"Search movie"} name={"title"} />
                 </label>
                 <button type={"submit"}>Search</button>
             </form>
