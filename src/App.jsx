@@ -5,6 +5,7 @@ import {ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from} from "@apol
 import {onError} from "@apollo/client/link/error";
 import {Route, Routes} from "react-router-dom";
 import ListContainer from "./components/ListContainer/ListContainer";
+import MovieDetailsContainer from "./components/MovieDetailsContainer/MovieDetailsContainer";
 
 const errorLink = onError(({graphqlErrors, networkError}) => {
     if (graphqlErrors) {
@@ -36,7 +37,7 @@ function App() {
                         <ListContainer/>
                     </ApolloProvider>}
                 />
-                <Route path={"/movie/*"} element={<h1>Movie</h1>}/>
+                <Route path={"/movie/:movieTitle"} element={<MovieDetailsContainer/>}/>
             </Routes>
 
 
