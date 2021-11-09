@@ -1,18 +1,17 @@
 const wikipediaApi = `https://en.wikipedia.org/w/api.php?`;
 const searchMovieQuery = `&origin=*&format=json&action=query&list=search&srsearch=`
+const FIRST_RESULT_INDEX = 0;
 
-async function searchMovie(movieTitle) {
+export default async function searchMovie(movieTitle) {
     try {
         const response = await fetch(wikipediaApi + searchMovieQuery + movieTitle);
-        return await response.json();
+        return getMoviePageId(await response.json());
     } catch (e) {
         console.log(e);
     }
 }
 
-export async function getMoviePageId(movieTitle) {
-    const searchResult = await searchMovie(movieTitle);
-    const moviePageId = searchResult;
-    return moviePageId.query.search[0].pageid;
+function getMoviePageId(movieList) {
+    return movieList.query.search[FIRST_RESULT_INDEX].pageid;
 }
 
