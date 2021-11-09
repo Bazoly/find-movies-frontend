@@ -10,5 +10,9 @@ async function searchMovie(movieTitle) {
     }
 }
 
-
+export async function getMoviePageId(movieTitle) {
+    const searchResult = await searchMovie(movieTitle);
+    const moviePageId = searchResult;
+    return moviePageId.query.search[0].pageid;
+}
 
