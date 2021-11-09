@@ -3,10 +3,15 @@ const SEARCH_MOVIE_QUERY = `&origin=*&format=json&action=query&list=search&srsea
 const GET_MOVIE_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=categories|extracts&exintro&explaintext&redirects=1&pageids=`
 const FIRST_RESULT_INDEX = 0;
 
-async function searchMovie(movieTitle) {
+async function apiGet(query, parameter) {
+    const response = await fetch(WIKIPEDIA_API + query + parameter);
+    return await response.json();
+}
+
+async function searchMovieWikipediaPageId(movieTitle) {
     try {
-        const response = await fetch(WIKIPEDIA_API + SEARCH_MOVIE_QUERY + movieTitle);
-        return getMoviePageId(await response.json());
+        const movieList = await apiGet(SEARCH_MOVIE_QUERY, movieTitle);
+        return getMoviePageId(movieList);
     } catch (e) {
         console.log(e);
     }
@@ -17,10 +22,9 @@ function getMoviePageId(movieList) {
 }
 
 export default async function getMovieFirstParagraph(movieTitle) {
-    const pageId = await searchMovie(movieTitle);
+    const pageId = await searchMovieWikipediaPageId(movieTitle);
     try {
-        const response = await fetch(WIKIPEDIA_API + GET_MOVIE_BY_PAGE_ID + pageId);
-        const movie = await response.json();
+        const movie = await apiGet(GET_MOVIE_BY_PAGE_ID, pageId);
         return movie.query.pages[pageId];
     } catch (e) {
         console.log(e);
