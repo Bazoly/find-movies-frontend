@@ -1,6 +1,7 @@
 const WIKIPEDIA_API = `https://en.wikipedia.org/w/api.php?`;
 const SEARCH_MOVIE_QUERY = `&origin=*&format=json&action=query&list=search&srsearch=`
 const GET_MOVIE_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=categories|extracts&exintro&explaintext&redirects=1&pageids=`
+const GET_ALL_LINK_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=extlinks&ellimit=500&redirects=1&pageids=`
 const FIRST_RESULT_INDEX = 0;
 
 async function apiGet(query, parameter) {
@@ -19,6 +20,15 @@ async function searchMovieWikipediaPageId(movieTitle) {
 
 function getMoviePageId(movieList) {
     return movieList.query.search[FIRST_RESULT_INDEX].pageid;
+}
+
+async function getAllLinksByPageId(pageId) {
+    try {
+        const links = await apiGet(GET_ALL_LINK_BY_PAGE_ID, pageId);
+        return links.query.pages[pageId];
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 export default async function getMovieFirstParagraph(movieTitle) {
