@@ -15,7 +15,7 @@ export default function ListContainer() {
     return (
         <div>
             {data.searchMovies.map((movie) => {
-                return <ListElement movie={movie}/>
+                return <ListElement key={movie.id} movie={movie}/>
             })}
         </div>
     )
