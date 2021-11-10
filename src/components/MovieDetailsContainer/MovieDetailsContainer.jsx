@@ -19,6 +19,7 @@ export default function MovieDetailsContainer() {
     }, [movieSearchParams]);
 
     if (loading) return <CircularProgress/>
+    if (movieDetails === undefined) return <h2>Movie not found!</h2>
     return (
         <div>
             <h2>{movieDetails.title}</h2>
