@@ -1,7 +1,8 @@
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 export default function Search() {
+    const {movieSearchParams} = useParams();
     const navigate = useNavigate();
 
     function handleSubmit(event) {
@@ -10,7 +11,7 @@ export default function Search() {
         if (!formDate.get("title")) {
             return;
         }
-        navigate(`/search?title=${formDate.get("title")}`);
+        navigate(`/search?movie=${formDate.get("title")}`);
 
     }
 
@@ -20,7 +21,7 @@ export default function Search() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Movie title:
-                    <input placeholder={"Search movie"} name={"title"} />
+                    <input placeholder={"Search movie"} name={"title"} value={movieSearchParams}/>
                 </label>
                 <button type={"submit"}>Search</button>
             </form>

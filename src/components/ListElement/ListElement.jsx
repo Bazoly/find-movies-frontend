@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 
 export default function ListElement({movie}) {
+    const FIRST_CAST_MEMBER_INDEX = 0;
     let releaseDate = null;
 
     if (movie.releaseDate !== null) {
@@ -10,7 +11,7 @@ export default function ListElement({movie}) {
     return (
         <div key={movie.id}>
             <h3>
-                <Link to={`/movie/${movie.name} ${releaseDate?.getFullYear()}`}>
+                <Link to={`/movie/${movie.name} ${releaseDate?.getFullYear()} ${movie.cast[FIRST_CAST_MEMBER_INDEX]?.person.name}`}>
                     {movie.name}
                 </Link>
             </h3>
