@@ -11,7 +11,7 @@ async function apiGet(url, parameter) {
 
 async function searchMovieWikipediaPageId(movieTitle) {
     try {
-        const movieList = await apiGet(SEARCH_MOVIE_QUERY, movieTitle);
+        const movieList = await apiGet(WIKIPEDIA_API + SEARCH_MOVIE_QUERY, movieTitle);
         return getMoviePageId(movieList);
     } catch (e) {
         console.log(e);
@@ -24,7 +24,7 @@ function getMoviePageId(movieList) {
 
 async function getAllLinksByPageId(pageId) {
     try {
-        const links = await apiGet(GET_ALL_LINK_BY_PAGE_ID, pageId);
+        const links = await apiGet(WIKIPEDIA_API + GET_ALL_LINK_BY_PAGE_ID, pageId);
         return links.query.pages[pageId];
     } catch (e) {
         console.log(e);
