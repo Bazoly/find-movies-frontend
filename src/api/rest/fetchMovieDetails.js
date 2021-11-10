@@ -4,8 +4,8 @@ const GET_MOVIE_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=extracts|i
 const GET_ALL_LINK_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=extlinks&ellimit=500&redirects=1&pageids=`
 const FIRST_RESULT_INDEX = 0;
 
-async function apiGet(query, parameter) {
-    const response = await fetch(WIKIPEDIA_API + query + parameter);
+async function apiGet(url, parameter) {
+    const response = await fetch(url + parameter);
     return await response.json();
 }
 
