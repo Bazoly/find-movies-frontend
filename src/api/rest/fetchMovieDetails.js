@@ -31,11 +31,30 @@ async function getAllLinksByPageId(pageId) {
     }
 }
 
+function getImdbLink(links) {
+    const imdbRegexp = /https:\/\/www\.imdb\.com\/title\/.*/;
+    const imdbLinkObject = {imdbLink: "#"};
+
+    const linksArray = links?.extlinks;
+    if (linksArray !== undefined) {
+        for (const linksArrayElement of linksArray) {
+            if (imdbRegexp.test(linksArrayElement["*"])) {
+                imdbLinkObject.imdbLink = linksArrayElement["*"];
+                return imdbLinkObject
+            }
+        }
+    }
+    return imdbLinkObject;
+}
+
 export default async function getMovieFirstParagraph(movieTitle) {
     const pageId = await searchMovieWikipediaPageId(movieTitle);
+    const links = await getAllLinksByPageId(pageId);
+    const imdbLink = getImdbLink(links);
     try {
-        const movie = await apiGet(GET_MOVIE_BY_PAGE_ID, pageId);
-        return movie.query.pages[pageId];
+        const movie = await apiGet(WIKIPEDIA_API + GET_MOVIE_BY_PAGE_ID, pageId);
+        const movieDetails = movie.query.pages[pageId];
+        return Object.assign(movieDetails, imdbLink);
     } catch (e) {
         console.log(e);
     }
