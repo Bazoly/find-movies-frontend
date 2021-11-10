@@ -37,7 +37,7 @@ function App() {
                         <ListContainer/>
                     </ApolloProvider>}
                 />
-                <Route path={"/movie/:movieTitle"} element={<MovieDetailsContainer/>}/>
+                <Route path={"/movie/:movieSearchParams"} element={<MovieDetailsContainer/>}/>
             </Routes>
 
 
