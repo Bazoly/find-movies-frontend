@@ -4,19 +4,19 @@ import getMovieFirstParagraph from "../../api/rest/fetchMovieDetails";
 import {CircularProgress} from "@mui/material";
 
 export default function MovieDetailsContainer() {
-    const {movieTitle} = useParams();
+    const {movieSearchParams} = useParams();
     const [movieDetails, setMovieDetails] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
-            const data = await getMovieFirstParagraph(movieTitle);
-            setLoading(false)
+            const data = await getMovieFirstParagraph(movieSearchParams);
             setMovieDetails(data);
+            setLoading(false);
         }
 
         fetchData()
-    }, [movieTitle]);
+    }, [movieSearchParams]);
 
     if (loading) return <CircularProgress/>
     return (
