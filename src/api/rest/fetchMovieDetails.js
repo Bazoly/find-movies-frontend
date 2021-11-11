@@ -44,7 +44,7 @@ async function getAllLinksByPageId(pageId) {
 
 function getImdbLink(links) {
     const imdbRegexp = /https:\/\/www\.imdb\.com\/title\/.*/;
-    const imdbLinkObject = {imdbLink: "#"};
+    const imdbLinkObject = {imdbLink: null};
 
     const linksArray = links?.extlinks;
     if (linksArray !== undefined) {
