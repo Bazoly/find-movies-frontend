@@ -58,8 +58,8 @@ function getImdbLink(links) {
     return imdbLinkObject;
 }
 
-export default async function getMovieFirstParagraph(movieTitle) {
-    const pageId = await searchMovieWikipediaPageId(movieTitle);
+export default async function getMovieFirstParagraph(movieTitle, movieReleaseDate) {
+    const pageId = await searchMovieWikipediaPageId(movieTitle, movieReleaseDate);
     const links = await getAllLinksByPageId(pageId);
     const imdbLink = getImdbLink(links);
     try {
