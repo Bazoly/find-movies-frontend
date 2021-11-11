@@ -22,8 +22,22 @@ export default function MovieDetailsContainer() {
             })
     }, [movieTitle, movieReleaseDate]);
 
-    if (loading) return <CircularProgress/>
-    if (movieDetails === undefined) return <h2>Movie not found!</h2>
+    if (loading) return <CircularProgress/>;
+    if (movieDetails === undefined) return <h2>Movie not found!</h2>;
+    if (movieDetails.imdbLink === null) return (
+        <Card elevation={3}>
+            <CardHeader title={movieDetails.title}/>
+            <CardContent>{movieDetails.extract}</CardContent>
+            <CardActions>
+                <IconButton title={"Wikipedia: " + movieDetails.title} href={movieDetails.canonicalurl}
+                            target={"_blank"} rel={"noreferrer"}>
+                    <img height="25" alt="Wikipedia&#039;s W"
+                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/128px-Wikipedia%27s_W.svg.png"/>
+                </IconButton>
+            </CardActions>
+        </Card>
+    );
+
     return (
         <Card elevation={3}>
             <CardHeader title={movieDetails.title}/>
@@ -41,7 +55,5 @@ export default function MovieDetailsContainer() {
                 </IconButton>
             </CardActions>
         </Card>
-
-
     );
 }
