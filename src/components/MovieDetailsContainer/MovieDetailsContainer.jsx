@@ -23,7 +23,7 @@ export default function MovieDetailsContainer() {
     }, [movieTitle, movieReleaseDate]);
 
     if (loading) return <CircularProgress/>;
-    if (movieDetails === undefined) return <h2>Movie not found!</h2>;
+    if (movieDetails === undefined) return <h1>Movie not found!</h1>;
     if (movieDetails.imdbLink === null) return (
         <Card elevation={3}>
             <CardHeader title={movieDetails.title}/>
