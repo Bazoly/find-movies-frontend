@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import "./ListElement.css"
 
 export default function ListElement({movie}) {
     const FIRST_CAST_MEMBER_INDEX = 0;
