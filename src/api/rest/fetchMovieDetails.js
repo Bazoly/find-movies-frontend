@@ -6,7 +6,12 @@ const FIRST_RESULT_INDEX = 0;
 
 async function apiGet(url, parameter) {
     const response = await fetch(url + parameter);
-    return await response.json();
+    if (response.status >= 200 && response.status <= 299) {
+        return await response.json();
+    } else {
+        throw new Error(response.statusText);
+    }
+
 }
 
 async function searchMovieWikipediaPageId(movieTitle) {
