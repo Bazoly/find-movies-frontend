@@ -2,24 +2,34 @@ const WIKIPEDIA_API = `https://en.wikipedia.org/w/api.php?`;
 const SEARCH_MOVIE_QUERY = `&origin=*&format=json&action=query&list=search&srsearch=`
 const GET_MOVIE_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=extracts|info&inprop=url&exintro&explaintext&redirects=1&pageids=`
 const GET_ALL_LINK_BY_PAGE_ID = `&origin=*&format=json&action=query&prop=extlinks&ellimit=500&redirects=1&pageids=`
-const FIRST_RESULT_INDEX = 0;
 
 async function apiGet(url, parameter) {
     const response = await fetch(url + parameter);
-    return await response.json();
+    if (response.status >= 200 && response.status <= 299) {
+        return await response.json();
+    } else {
+        throw new Error(response.statusText);
+    }
+
 }
 
-async function searchMovieWikipediaPageId(movieTitle) {
+async function searchMovieWikipediaPageId(movieTitle, movieReleaseDate) {
     try {
-        const movieList = await apiGet(WIKIPEDIA_API + SEARCH_MOVIE_QUERY, movieTitle);
-        return getMoviePageId(movieList);
+        const movieList = await apiGet(WIKIPEDIA_API + SEARCH_MOVIE_QUERY, movieTitle + " " + movieReleaseDate);
+        return getMoviePageId(movieList, movieTitle, movieReleaseDate);
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
-function getMoviePageId(movieList) {
-    return movieList.query.search[FIRST_RESULT_INDEX].pageid;
+function getMoviePageId(movieList, movieTitle, movieReleaseDate) {
+    const movieRegexp = new RegExp(movieTitle + "?\\s*(.*?)\\s*(?:" + movieReleaseDate + "?:\\s*(.*))?$");
+    for (const movieListElement of movieList.query.search) {
+        if (movieRegexp.test(movieListElement.title)) {
+            return movieListElement.pageid;
+        }
+    }
+    throw new Error("Movie not found!")
 }
 
 async function getAllLinksByPageId(pageId) {
@@ -27,13 +37,13 @@ async function getAllLinksByPageId(pageId) {
         const links = await apiGet(WIKIPEDIA_API + GET_ALL_LINK_BY_PAGE_ID, pageId);
         return links.query.pages[pageId];
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
 function getImdbLink(links) {
     const imdbRegexp = /https:\/\/www\.imdb\.com\/title\/.*/;
-    const imdbLinkObject = {imdbLink: "#"};
+    const imdbLinkObject = {imdbLink: null};
 
     const linksArray = links?.extlinks;
     if (linksArray !== undefined) {
@@ -47,8 +57,8 @@ function getImdbLink(links) {
     return imdbLinkObject;
 }
 
-export default async function getMovieFirstParagraph(movieTitle) {
-    const pageId = await searchMovieWikipediaPageId(movieTitle);
+export default async function getMovieFirstParagraph(movieTitle, movieReleaseDate) {
+    const pageId = await searchMovieWikipediaPageId(movieTitle, movieReleaseDate);
     const links = await getAllLinksByPageId(pageId);
     const imdbLink = getImdbLink(links);
     try {
@@ -56,7 +66,7 @@ export default async function getMovieFirstParagraph(movieTitle) {
         const movieDetails = movie.query.pages[pageId];
         return Object.assign(movieDetails, imdbLink);
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 
 }

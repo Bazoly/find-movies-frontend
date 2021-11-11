@@ -9,11 +9,6 @@ export const SEARCH_MOVIES_BY_TITLE = gql`
         genres {
             name
         }
-        cast(limit: 1) {
-            person {
-                name
-            }
-        }
         score
   }
 }

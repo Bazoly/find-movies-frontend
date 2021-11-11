@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import "./ListElement.css"
 
 export default function ListElement({movie}) {
-    const FIRST_CAST_MEMBER_INDEX = 0;
     let releaseDate = null;
 
     if (movie.releaseDate !== null) {
@@ -14,7 +13,7 @@ export default function ListElement({movie}) {
         <Card key={movie.id} sx={{m: 1}} elevation={3}>
             <CardHeader title={
                 <Link
-                    to={`/movie/${movie.name} ${releaseDate?.getFullYear()} ${movie.cast[FIRST_CAST_MEMBER_INDEX]?.person.name}`}>
+                    to={`/movie/${movie.name}/${releaseDate?.getFullYear()}`}>
                     {movie.name}
                 </Link>
             }>
