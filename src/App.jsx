@@ -7,6 +7,8 @@ import {Route, Routes} from "react-router-dom";
 import ListContainer from "./components/ListContainer/ListContainer";
 import MovieDetailsContainer from "./components/MovieDetailsContainer/MovieDetailsContainer";
 
+const TMDB_GRAPHQL_URL = "https://tmdb.sandbox.zoosh.ie/dev/graphql";
+
 const errorLink = onError(({graphqlErrors, networkError}) => {
     if (graphqlErrors) {
         graphqlErrors.map(({message, location, path}) => {
@@ -20,7 +22,7 @@ const errorLink = onError(({graphqlErrors, networkError}) => {
 
 const link = from([
     errorLink,
-    new HttpLink({uri: "https://tmdb.sandbox.zoosh.ie/dev/graphql"})
+    new HttpLink({uri: TMDB_GRAPHQL_URL})
 ]);
 
 const client = new ApolloClient({
