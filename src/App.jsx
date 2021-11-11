@@ -1,5 +1,5 @@
 import './App.css';
-import {AppBar} from "@mui/material";
+import {AppBar, Grid, Link} from "@mui/material";
 import Search from "./components/Search/Search";
 import {ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from} from "@apollo/client";
 import {onError} from "@apollo/client/link/error";
@@ -29,16 +29,26 @@ const client = new ApolloClient({
 function App() {
     return (
         <main>
-            <AppBar position={"static"}>Find Movies</AppBar>
-            <Search/>
-            <Routes>
-                <Route path={"/search"} element={
-                    <ApolloProvider client={client}>
-                        <ListContainer/>
-                    </ApolloProvider>}
-                />
-                <Route path={"/movie/:movieSearchParams"} element={<MovieDetailsContainer/>}/>
-            </Routes>
+            <AppBar position={"static"}>
+                <Link href={"/"} underline={"none"} variant={"h6"} color={"white"} padding={2}>
+                    Find Movies
+                </Link>
+            </AppBar>
+            <Grid container>
+                <Grid item xs={3}/>
+                <Grid item xs={6}>
+                    <Search/>
+                    <Routes>
+                        <Route path={"/search"} element={
+                            <ApolloProvider client={client}>
+                                <ListContainer/>
+                            </ApolloProvider>}
+                        />
+                        <Route path={"/movie/:movieSearchParams"} element={<MovieDetailsContainer/>}/>
+                    </Routes>
+                </Grid>
+                <Grid item xs={3}/>
+            </Grid>
 
 
         </main>

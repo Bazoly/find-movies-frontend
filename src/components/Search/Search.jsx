@@ -1,4 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
+import {Button, TextField} from "@mui/material";
+import "./Search.css"
 
 
 export default function Search() {
@@ -19,11 +21,8 @@ export default function Search() {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Movie title:
-                    <input placeholder={"Search movie"} name={"title"} value={movieSearchParams}/>
-                </label>
-                <button type={"submit"}>Search</button>
+                <TextField name={"title"} placeholder={"Search movie"} value={movieSearchParams} variant={"outlined"} fullWidth={true} margin={"normal"}/>
+                <Button type={"submit"} variant={"contained"} color={"primary"}>Search</Button>
             </form>
         </>
 
