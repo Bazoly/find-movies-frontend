@@ -38,7 +38,7 @@ async function getAllLinksByPageId(pageId) {
         const links = await apiGet(WIKIPEDIA_API + GET_ALL_LINK_BY_PAGE_ID, pageId);
         return links.query.pages[pageId];
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
@@ -67,7 +67,7 @@ export default async function getMovieFirstParagraph(movieTitle) {
         const movieDetails = movie.query.pages[pageId];
         return Object.assign(movieDetails, imdbLink);
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 
 }
