@@ -13,7 +13,7 @@ export default function ListElement({movie}) {
         <Card key={movie.id} sx={{m: 1}} elevation={3}>
             <CardHeader title={
                 <Link
-                    to={`/movie/${movie.name} ${releaseDate?.getFullYear()} ${movie.cast[FIRST_CAST_MEMBER_INDEX]?.person.name}`}>
+                    to={`/movie/${movie.name}/${releaseDate?.getFullYear()}`}>
                     {movie.name}
                 </Link>
             }>
