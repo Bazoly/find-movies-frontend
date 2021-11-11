@@ -50,6 +50,7 @@ function App() {
                             </ApolloProvider>}
                         />
                         <Route path={"/movie/:movieTitle/:movieReleaseDate"} element={<MovieDetailsContainer/>}/>
+                        <Route path={"/"} element={<h1>Welcome to the Find Movies!</h1>}/>
                     </Routes>
                 </Grid>
                 <Grid item xs={3}/>
