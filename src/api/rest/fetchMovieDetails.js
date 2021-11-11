@@ -14,17 +14,23 @@ async function apiGet(url, parameter) {
 
 }
 
-async function searchMovieWikipediaPageId(movieTitle) {
+async function searchMovieWikipediaPageId(movieTitle, movieReleaseDate) {
     try {
-        const movieList = await apiGet(WIKIPEDIA_API + SEARCH_MOVIE_QUERY, movieTitle);
-        return getMoviePageId(movieList);
+        const movieList = await apiGet(WIKIPEDIA_API + SEARCH_MOVIE_QUERY, movieTitle + " " + movieReleaseDate);
+        return getMoviePageId(movieList, movieTitle, movieReleaseDate);
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
-function getMoviePageId(movieList) {
-    return movieList.query.search[FIRST_RESULT_INDEX].pageid;
+function getMoviePageId(movieList, movieTitle, movieReleaseDate) {
+    const movieRegexp = new RegExp(movieTitle + "?\\s*(.*?)\\s*(?:" + movieReleaseDate + "?:\\s*(.*))?$");
+    for (const movieListElement of movieList.query.search) {
+        if (movieRegexp.test(movieListElement.title)) {
+            return movieListElement.pageid;
+        }
+    }
+    throw new Error("Movie not found!")
 }
 
 async function getAllLinksByPageId(pageId) {
