@@ -13,6 +13,9 @@ const errorLink = onError(({graphqlErrors, networkError}) => {
             console.log(`Graphql error ${message} ${location} ${path}`)
         })
     }
+    if (networkError) {
+        console.log(`Network error ${networkError.name}: ${networkError.message}`)
+    }
 });
 
 const link = from([
