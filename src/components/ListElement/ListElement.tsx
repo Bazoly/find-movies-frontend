@@ -1,8 +1,10 @@
+import React, {ReactElement} from "react";
 import {Card, CardContent, CardHeader} from "@mui/material";
 import {Link} from "react-router-dom";
 import "./ListElement.css"
+import {Movie} from "../ListContainer/ListContainer";
 
-export default function ListElement({movie}) {
+export default function ListElement({movie}: {movie: Movie}): ReactElement {
     let releaseDate = null;
 
     if (movie.releaseDate !== null) {
