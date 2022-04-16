@@ -1,29 +1,17 @@
+import React from 'react';
 import './App.css';
 import {AppBar, Grid, Link} from "@mui/material";
 import Search from "./components/Search/Search";
-import {ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from} from "@apollo/client";
-import {onError} from "@apollo/client/link/error";
+import {ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from "@apollo/client";
 import {Route, Routes} from "react-router-dom";
 import ListContainer from "./components/ListContainer/ListContainer";
 import MovieDetailsContainer from "./components/MovieDetailsContainer/MovieDetailsContainer";
 
 const TMDB_GRAPHQL_URL = "https://tmdb.sandbox.zoosh.ie/dev/graphql";
 
-const errorLink = onError(({graphqlErrors, networkError}) => {
-    if (graphqlErrors) {
-        graphqlErrors.map(({message, location, path}) => {
-            console.log(`Graphql error ${message} ${location} ${path}`)
-        })
-    }
-    if (networkError) {
-        console.log(`Network error ${networkError.name}: ${networkError.message}`)
-    }
-});
-
-const link = from([
-    errorLink,
-    new HttpLink({uri: TMDB_GRAPHQL_URL})
-]);
+const link = createHttpLink({
+    uri: TMDB_GRAPHQL_URL,
+})
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
