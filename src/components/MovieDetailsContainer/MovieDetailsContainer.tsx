@@ -1,17 +1,19 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import getMovieFirstParagraph from "../../api/rest/fetchMovieDetails";
+import React, {useEffect, useState, ReactElement} from "react";
+import getMovieFirstParagraph, {MovieDetailedView}  from "../../api/rest/fetchMovieDetails";
 import {Card, CardActions, CardContent, CardHeader, CircularProgress, IconButton} from "@mui/material";
 
-export default function MovieDetailsContainer() {
+export default function MovieDetailsContainer(): ReactElement {
     const {movieTitle} = useParams();
     const {movieReleaseDate} = useParams();
-    const [movieDetails, setMovieDetails] = useState({});
+    const [movieDetails, setMovieDetails] = useState<MovieDetailedView | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
+            if (!movieTitle || !movieReleaseDate) throw new Error("No movie title or release date");
             const data = await getMovieFirstParagraph(movieTitle, movieReleaseDate);
+            if (!data) throw new Error("No data");
             setMovieDetails(data);
             setLoading(false);
         }
@@ -23,7 +25,7 @@ export default function MovieDetailsContainer() {
     }, [movieTitle, movieReleaseDate]);
 
     if (loading) return <CircularProgress/>;
-    if (movieDetails === undefined) return <h1>Movie not found!</h1>;
+    if (!movieDetails) return <h1>Movie not found!</h1>;
     if (movieDetails.imdbLink === null) return (
         <Card elevation={3}>
             <CardHeader title={movieDetails.title}/>
